@@ -1,0 +1,8 @@
+###REQUIREMENTS###
+pandas version: 2.2.3
+matplotlib version: 3.9.3
+numpy version: 1.26.2
+seaborn version: 0.13.2
+tensorflow version: 2.19.0
+scikit-learn version: 1.5.2
+imbalanced-learn version: 0.13.0
