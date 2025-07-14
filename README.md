@@ -1,5 +1,4 @@
 # DS_Adult_Income
-
 ## Overview
 
 This project uses data extracted from the 1994 Census Bureau database by Ronny Kohavi and Barry Becker. The dataset is used to predict whether a person’s income exceeds \$50,000 per year (>50K) or not (<=50K), based on census data (demographic and economic features).
