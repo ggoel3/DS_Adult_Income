@@ -1,142 +1,186 @@
-# DS_Adult_Income
+# Adult Census Income Prediction Project
+
 ## Overview
 
-This project uses data extracted from the 1994 Census Bureau database by Ronny Kohavi and Barry Becker. The dataset is used to predict whether a person’s income exceeds \$50,000 per year (>50K) or not (<=50K), based on census data (demographic and economic features).
+This project uses data extracted from the 1994 Census Bureau database by Ronny Kohavi and Barry Becker. The dataset is used to predict whether a person’s income exceeds \$50,000 per year (>50K) or not (<=50K), based on demographic and economic features.
 
-* **Source**:  https://www.kaggle.com/datasets/uciml/adult-census-income/data
-* **Number of rows & features**: 32,561 Rows and 15 features
-* **Key features**:
-  `age`, `workclass`, `fnlwgt`, `education`, `education.num`, `marital.status`, `occupation`, `relationship`, `race`, `sex`, `capital.gain`, `capital.loss`, `hours.per.week`, `native.country`
-* **Target Feature**: `income`
-
-## **Dataset Description**
-
-| Column Name      | Data Type | Description                                                  |
-| ---------------- | --------- | ------------------------------------------------------------ |
-| `age`            | int       | Age of the individual                                        |
-| `workclass`      | object    | Type of employment (e.g., Private, Self-emp, Government)     |
-| `fnlwgt`         | int       | Final weight — proxy indicator for population representation |
-| `education`      | object    | Highest level of education attained                          |
-| `education.num`  | int       | Number of years of education                                 |
-| `marital.status` | object    | Marital status (e.g., Married, Never-married, Divorced)      |
-| `occupation`     | object    | Type of occupation (e.g., Tech-support, Sales, etc.)         |
-| `relationship`   | object    | Household relationship (e.g., Husband, Not-in-family)        |
-| `race`           | object    | Race of the individual                                       |
-| `sex`            | object    | Gender of the individual (`Male` or `Female`)                |
-| `capital.gain`   | int       | Capital gains in dollars                                     |
-| `capital.loss`   | int       | Capital losses in dollars                                    |
-| `hours.per.week` | int       | Number of working hours per week                             |
-| `native.country` | object    | Country of origin                                            |
-| `income`         | object    | Target variable — income category (`<=50K` or `>50K`)        |
-
-
-## **Repository Structure**
-
-```
-adult_income/                  — raw dataset file  
-adult_income_clean/                — clean dataset file  
-DataWorkflow_Adult_Census_Income/ — Jupyter notebooks with preprocessing, exploratory data analysis, modeling, and evaluation  
-requirements.txt                   — environment dependencies  
-README.md                          — project overview and instructions  
-```
-
-## **Data checkpoints before pre-processing**
-
-* Checked for null values to identify missing data in all columns
-* Checking all Data columns unique values to catch inconsistencies or rare values
-* Searched for duplicate records
-* Verified data types and reviewed basic statistics of numerical features (creating boxplots to identify outliers)
+* **Source**: [Kaggle Dataset](https://www.kaggle.com/datasets/uciml/adult-census-income/data)
+* **Rows & Features**: 32,561 rows and 15 features
+* **Key Features**: `age`, `workclass`, `fnlwgt`, `education`, `education.num`, `marital.status`, `occupation`, `relationship`, `race`, `sex`, `capital.gain`, `capital.loss`, `hours.per.week`, `native.country`
+* **Target**: `income`
 
 ---
 
-## **Data Cleaning Steps**
+## Repository Structure
 
-* Removing duplicate rows
-* Renaming the column name `'fnlwgt'` to `'population.weight'` (a better name for clear understanding)
-* Renaming the column name `'education.num'` to `'years.of.education'` (a better name for clear understanding)
-* Completing the country names for better understanding (`'South'` to `'South-Korea'` and `'Hong'`, `'Hong-Kong'`)
-* Randomly modifying the column `'sex'` values like `'Female'` to `'F'` and `'Male'` to `'M'` and then fix it as `'Male'` and `'Female'`
-* Keep only rows where the country is not `'?'`
-* Filling in missing values for the columns `'workclass'` and `'occupation'` using DecisionTree Classifier
-* Apply `log1p` (log(x+1)) to skewed variables
-* Apply One hot encoding to the categorical columns
+```
+adult_income/                  # Raw dataset file  
+adult_income_clean/                # Cleaned dataset file  
+DataWorkflow_Adult_Census_Income/ # Jupyter notebooks for preprocessing, modeling, evaluation  
+requirements.txt                   # Python dependencies  
+README.md                          # Project overview and instructions  
+Adult_income_prediction.xls        # Human predictions from our team (user study)
+```
+
+---
+
+##  Data Preprocessing Steps
+
+1. Removed duplicate rows
+2. Renamed columns:
+
+   * `fnlwgt` → `population.weight`
+   * `education.num` → `years.of.education`
+3. Standardized incomplete country names:
+
+   * `'South'` → `'South-Korea'`
+   * `'Hong'` → `'Hong-Kong'`
+4. Randomly modified and corrected entries in `sex` column (e.g., `'F'` → `'Female'`)
+5. Removed rows with unknown country (`'?'`)
+6. Imputed missing values in `workclass` and `occupation` using **Decision Tree Classifier**
+7. Applied `log1p()` transformation on skewed numerical variables
+8. Applied **One-Hot Encoding** to categorical columns
+
+---
+
+## ⚙️ How to Run the Project
+
+### 1. Clone the Repository
+
+```bash
+git clone https://github.com/ggoel3/DS_Adult_Income.git
+cd DS_Adult_Income
+```
+
+### 2. Set Up the Environment
+
+Install required libraries:
+
+```bash
+pip install -r requirements.txt
+```
+
+### 3.  Run Preprocessing and Modeling
+
+####  Data Preprocessing Steps
+
+1. **Remove duplicate rows**
+   Eliminate repeated records to avoid data leakage or bias.
+
+2. **Rename columns for clarity**
+
+   * `'fnlwgt'` → `'population.weight'`
+   * `'education.num'` → `'years.of.education'`
+
+3. **Standardize country names**
+   Replace incomplete or ambiguous entries for better readability:
+
+   * `'South'` → `'South-Korea'`
+   * `'Hong'` → `'Hong-Kong'`
+
+4. **Correct inconsistent `sex` values**
+   Randomly modified entries like `'F'` and `'M'` are normalized back to `'Female'` and `'Male'`.
+
+5. **Remove unknown country entries**
+   Drop rows where `'native.country' == '?'`.
+
+6. **Impute missing values**
+   Use a **Decision Tree Classifier** to fill missing values in:
+
+   * `'workclass'`
+   * `'occupation'`
+
+7. **Transform skewed numerical features**
+   Apply a `log1p` (log(x + 1)) transformation to reduce the skew in:
+
+   * `capital.gain`
+   * `capital.loss`
+   * `population.weight`
+
+8. **Encode categorical variables**
+   Apply **One-Hot Encoding** to all categorical columns (excluding the target).
+
+---
+
+##  Experimental Setup and Key Findings
+
+* **Split**: Data split into **80/20 train-test** with **stratification**
+* **Pipeline**: Used `Pipeline` to combine:
+
+  * `StandardScaler` for normalization
+  * `SMOTE` to oversample the minority class
+  * Logistic Regression or MLPClassifier
+* **Cross-validation**: 4-fold Stratified CV with `GridSearchCV`
+* **Scoring Metric**: Optimized for **F1 Score** due to class imbalance
+* **Target Variable Encoding**: `<=50K` → 0, `>50K` → 1
+
+### Results Summary
+
+| Model                | Accuracy | F1 (Class 1) | Recall (Class 1) |
+| -------------------- | -------- | ------------ | ---------------- |
+| **Logistic Reg.**    | 0.8068   | 0.6781       | 0.8454           |
+| **Neural Network**   | 0.8149   | 0.6722       | 0.7882           |
+| **Baseline**         | 0.7592   | 0.0000       | 0.0000           |
+| **Human Prediction** | 0.6263   | 0.6105       | 0.6744           |
+
+* The **Neural Network** slightly outperforms Logistic Regression in **recall and accuracy**.
+* **Logistic Regression** has a slightly **higher F1** on Class 1 (income >50K), making it more interpretable with comparable results.
+* **Baseline model** fails to capture high-income class due to predicting only the majority class.
+* **Human predictions**, while reasonable, were less consistent and performed worse than both ML models.
+
+---
+
+##  Challenges and Literature References
+
+###  Major Challenges
+
+* **Missing Values**: `workclass`, `occupation`, and `native.country` contained missing or ambiguous values ('?'), requiring imputation using Decision Tree models.
+* **Class Imbalance**: High-income class (`>50K`) was underrepresented (\~25% of samples), leading to biased accuracy. We used **SMOTE** for balancing.
+* **Categorical Encoding**: Many features like `workclass` and `education` needed One-Hot Encoding, resulting in high dimensionality.
+* **Outliers and Skewness**: Columns like `capital.gain` and `population.weight` were heavily skewed; we addressed this using `log1p()` transformation.
+* **Human predictions** showed that even educated guesses tend to overfit to visible demographic signals, lacking statistical generalization.
+
+###  Related Work
+
+* Kohavi (1996) used this dataset and achieved \~85% accuracy using **NBTree** (a hybrid of Naive Bayes and Decision Tree). However, F1 and recall were **not reported** in early works.
+* Our approach aligns with modern ML practices:
+
+  * Using **stratified sampling**, **feature scaling**, **class balancing**, and **evaluation beyond accuracy**
+  * Avoiding misleading metrics by including **recall, precision, F1** per class
+
+---
 
 
-## **Steps for Logistic Regression and Neural Network Model Implementation**
+## Additional Information
 
-1. **Split data into features and target**
+### Steps for Logistic Regression and Neural Network Model Implementation
+
+1. **Split data into features and target**  
    Identify the target variable (`income`) and separate it from predictor features.
 
-2. **Train/Test split**
+2. **Train/Test split**  
    Divide the data into training and test sets, using stratified sampling to maintain the class distribution.
 
-3. **Define pipeline**
-   Combine the following steps into a single pipeline:
+3. **Define pipeline**  
+   Combine the following steps into a single pipeline:  
+   - Scaler (e.g., `StandardScaler`) for numerical feature normalization  
+   - SMOTE for handling class imbalance in the training set  
+   - Classifier (either Logistic Regression or Neural Network)
 
-   * Scaler (e.g., `StandardScaler`) for numerical feature normalization
-   * SMOTE for handling class imbalance in the training set
-   * Classifier (either Logistic Regression or Neural Network)
-
-4. **Define hyperparameters to tune**
+4. **Define hyperparameters to tune**  
    Select candidate hyperparameters for grid search (e.g., regularization strength, hidden layer sizes).
 
-5. **Set up cross-validation strategy**
+5. **Set up cross-validation strategy**  
    Use 4-fold stratified cross-validation to ensure balanced distribution of classes across folds.
 
-6. **Hyperparameter tuning with GridSearchCV**
+6. **Hyperparameter tuning with GridSearchCV**  
    Perform exhaustive search over the hyperparameter grid, combining cross-validation and scoring.
 
-7. **Fit pipeline to training data**
+7. **Fit pipeline to training data**  
    Train models and select the best configuration based on cross-validation scores.
 
-8. **Report best hyperparameters & scores**
+8. **Report best hyperparameters & scores**  
    Display the optimal hyperparameter values and corresponding validation performance.
 
-9. **Evaluate on test set**
+9. **Evaluate on test set**  
    Assess the final model on unseen test data using multiple metrics (accuracy, F1-score, confusion matrix, etc.).
-
-
-## **Steps to Run**
-
-1. **Clone the repository**
-
-   ```bash
-   git clone <repo>
-   cd <repo>
-   ```
-
-2. **Set up the environment**
-
-   ```bash
-   pip install -r requirements.txt
-   ```
-
-3. **Import all required libraries**
-
-4. **Read the dataset CSV file into a pandas DataFrame**
-
-5. **Run all the steps mentioned under ‘Data checkpoints before pre-processing’**
-
-6. **Clean the data using all the steps mentioned under ‘Data checkpoints before pre-processing’**
-
-7. **Apply Logistics and Neural Network Model to evaluate the performance**
-   (Follow all the steps mentioned under “Steps for Logistic Regression and Neural Network Model Implementation”)
-
-8. **Evaluate the Baseline model (`strategy='most_frequent'`)**
-
-9. **Compare all three models (Logistic Regression, Neural Network, and Baseline Model)**
-
-## **Experimental Setup and Key Findings**
-
-We used the 1994 Census income dataset filtered to individuals over 16 years old with sufficient income and working hours. Data preprocessing involved cleaning missing values, encoding categorical variables, and scaling numerical features.
-
-The modeling pipeline compared logistic regression and a neural network, using stratified train-validation-test splits and cross-validation for hyperparameter tuning. Both models achieved similar accuracy (\~85%), but the neural network showed slightly better recall for the high-income class. Key metrics included precision, recall, and F1-score, reflecting balanced performance on imbalanced data.
-
-Kohavi (1996) used the Adult dataset and achieved about 85% accuracy using a Naive Bayes / decision tree hybrid (NBTree). The paper does not report precision, recall, or F1-score, as these metrics were not standard practice at the time.
-
-
-## **Challenges**
-
-A main challenge was handling missing and inconsistent categorical data, especially in `workclass`, `occupation`, and `native.country`. Rare categories required grouping to avoid sparse feature issues. Balancing interpretability (logistic regression) versus predictive power (neural network) was another focus, aligned with literature where tree-based and deep models often outperform linear baselines but require more careful tuning.
-
-Previous studies emphasize the importance of stratified sampling and proper encoding, which informed our preprocessing choices. Addressing class imbalance and outlier detection was also critical, consistent with standard practices in census income prediction research.
