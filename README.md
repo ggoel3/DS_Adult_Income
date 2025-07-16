@@ -1,24 +1,24 @@
-### DS_Adult_Income
-### Experimental Setup
+# DS_Adult_Income
+## Experimental Setup
 
 ### Environment 
 
 Following software and python libraries should be installed with their respective version numbers:
 
-Git version: 2.39.5
-Python version: 3.13.1
-ipykernel
+Git version: 2.39.5 </br>
+Python version: 3.13.1 </br>
+ipykernel </br>
 
-# Libraries:
-pandas version: 2.2.3
-matplotlib version: 3.9.3
-numpy version: 1.26.2
-seaborn version: 0.13.2
-tensorflow version: 2.19.0
-scikit-learn version: 1.5.2
-imbalanced-learn version: 0.13.0
+### Libraries:
+pandas version: 2.2.3 </br>
+matplotlib version: 3.9.3 </br>
+numpy version: 1.26.2 </br>
+seaborn version: 0.13.2 </br>
+tensorflow version: 2.19.0 </br>
+scikit-learn version: 1.5.2 </br>
+imbalanced-learn version: 0.13.0 </br>
 
-# Data Overview: 
+### Data Overview: 
 
 This project uses data extracted from the 1994 Census Bureau database by Ronny Kohavi and Barry Becker. The dataset is used to predict whether a person’s income exceeds \$50,000 per year (>50K) or not (<=50K), based on census data (demographic and economic features).
 
@@ -28,7 +28,7 @@ This project uses data extracted from the 1994 Census Bureau database by Ronny K
   `age`, `workclass`, `fnlwgt`, `education`, `education.num`, `marital.status`, `occupation`, `relationship`, `race`, `sex`, `capital.gain`, `capital.loss`, `hours.per.week`, `native.country`
 * **Target Feature**: `income`
 
-# Dataset Description
+### Dataset Description
 
 | Column Name      | Data Type | Description                                                  |
 | ---------------- | --------- | ------------------------------------------------------------ |
@@ -49,7 +49,7 @@ This project uses data extracted from the 1994 Census Bureau database by Ronny K
 | `income`         | object    | Target variable — income category (`<=50K` or `>50K`)        |
 
 
-# Data Pre-Processing Steps
+### Data Pre-Processing Steps
 
 * Removing duplicate rows
 * Renaming the column name `'fnlwgt'` to `'population.weight'` (a better name for clear understanding)
@@ -61,7 +61,7 @@ This project uses data extracted from the 1994 Census Bureau database by Ronny K
 * Apply `log1p` (log(x+1)) to skewed variables
 * Apply One hot encoding to the categorical columns
 
-# Models & Hyperparameters
+### Models & Hyperparameters
 
 - Logistic Regression
    Hyperparameter: clf__C
@@ -77,7 +77,7 @@ This project uses data extracted from the 1994 Census Bureau database by Ronny K
 - Human Prediction
    Prediction of target feature 'income' on 100 randomly picked observations done by 3 group members
 
-# Experimental Procedure
+### Experimental Procedure
 
 1. **Split data into features and target**
    Identify the target variable (`income`) and separate it from predictor features.
@@ -120,34 +120,34 @@ This project uses data extracted from the 1994 Census Bureau database by Ronny K
     Compare all three models (Logistic Regression, Neural Network, and Baseline Model) and also try to compare their performance with human based predictions as well.
     
     
-# Evaluation Metrics
+### Evaluation Metrics
 - Accuracy
 - Precision, Recall, F1-score
 - Confusion Matrix
 
-# Reproducibility
+### Reproducibility
   Random seed: 30
 
-# Key Findings
+### Key Findings
 
 We used the 1994 Census income dataset filtered to individuals over 16 years old with sufficient income and working hours. Data preprocessing involved cleaning missing values, encoding categorical variables, and scaling numerical features.
 
 Kohavi (1996) used the Adult dataset and achieved about 85% accuracy using a Naive Bayes / decision tree hybrid (NBTree). The paper does not report precision, recall, or F1-score, as these metrics were not standard practice at the time.
 
-# Our models Comparison summary:
+### Our models Comparison summary:
                  Model                Accuracy  F1 (class 0)  Recall (class 0)   Precision (class 0) 
-0.               Baseline (Majority)  0.7592        0.8631            1.0000     0.7592  
-1.               Logistic Regression  0.8068        0.8619            0.7945     0.9419  
-2.               Neural Network       0.8149        0.8710            0.8234     0.9246  
-3.               Human Prediction     0.6263        0.6408            0.5893     0.7021  
+                 Baseline (Majority)  0.7592        0.8631            1.0000     0.7592  
+                 Logistic Regression  0.8068        0.8619            0.7945     0.9419  
+                 Neural Network       0.8149        0.8710            0.8234     0.9246  
+                 Human Prediction     0.6263        0.6408            0.5893     0.7021  
 
                  Model                            F1 (class 1)  Recall (class 1) Precision (class 1)  
-0.               Baseline (Majority).               0.0000            0.0000     0.0000  
-1.               Logistic Regression                0.6781            0.8454     0.5661  
-2.               Neural Network                     0.6722            0.7882     0.5860  
-3.               Human Prediction                   0.6105            0.6744     0.5577  
+                 Baseline (Majority).               0.0000            0.0000     0.0000  
+                 Logistic Regression                0.6781            0.8454     0.5661  
+                 Neural Network                     0.6722            0.7882     0.5860  
+                 Human Prediction                   0.6105            0.6744     0.5577  
 
-# Overall Performance:
+### Overall Performance:
 
 * The Neural Network achieved the highest accuracy (0.8149) and best balanced F1 score on class 0 (0.8710) compared to other models.
 
@@ -163,9 +163,9 @@ Kohavi (1996) used the Adult dataset and achieved about 85% accuracy using a Nai
   Completely fails on minority class: F1 and recall for class 1 are both 0.0000.
 ---
 
-###  Challenges and Literature References
+#  Challenges and Literature References
 
-# Major Challenges
+### Major Challenges
 
 * **Missing Values**: `workclass`, `occupation` contained missing or ambiguous values ('?'), requiring imputation using Decision Tree models.
 * **Class Imbalance**: High-income class (`>50K`) was underrepresented (\~25% of samples), leading to biased accuracy. We used **SMOTE** for balancing.
@@ -173,13 +173,13 @@ Kohavi (1996) used the Adult dataset and achieved about 85% accuracy using a Nai
 * **Outliers and Skewness**: Columns like `capital.gain` and `population.weight` were heavily skewed; we addressed this using `log1p()` transformation.
 * **Human predictions** showed that even educated guesses tend to overfit to visible demographic signals, lacking statistical generalization.
 
-# Related Work
+### Related Work
 
 * Kohavi (1996) used this dataset and achieved \~85% accuracy using **NBTree** (a hybrid of Naive Bayes and Decision Tree). However, F1 and recall were **not reported** in early works.
 
-### Navigating Repository
+# Navigating Repository
 
-# Repository Structure
+### Repository Structure
 
 ```
 adult_income/                      — raw dataset file  
@@ -189,7 +189,7 @@ requirements.txt                   — environment dependencies
 README.md                          — project overview and instructions  
 ```
 
-# Steps to Re-Run the Experiment
+### Steps to Re-Run the Experiment
 
 1. Clone the repository
    ```bash
